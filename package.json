@@ -1,4 +1,16 @@
 {
+  
+  "name": "s69_worst_possible_pizza_varieties_one_should_never_try",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+
   "dependencies": {
     "express": "^4.21.2"
   }
