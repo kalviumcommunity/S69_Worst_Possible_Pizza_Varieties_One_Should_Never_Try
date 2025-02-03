@@ -1,5 +1,5 @@
 {
-  
+
   "name": "s69_worst_possible_pizza_varieties_one_should_never_try",
   "version": "1.0.0",
   "main": "index.js",
@@ -12,6 +12,10 @@
   "description": "",
 
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+     "dotenv": "^16.4.7",
+    "mongoose": "^8.9.6",
+    "nodemon": "^3.1.9"
+
   }
 }
