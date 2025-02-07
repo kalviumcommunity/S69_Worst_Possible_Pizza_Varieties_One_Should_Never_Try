@@ -1,9 +1,10 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const mongoose = require('mongoose'); // Import mongoose here
-const connectDatabase = require('./database'); // Import your custom database connection logic
+const mongoose = require('mongoose');
+const connectDatabase = require('./database'); // Database connection logic
+const routes = require('./routes'); // Import your CRUD routes
 
-// Initialize dotenv to use environment variables
+// Initialize dotenv for environment variables
 dotenv.config();
 
 const app = express();
@@ -12,22 +13,30 @@ const port = process.env.PORT || 5000;
 // Connect to the database
 connectDatabase();
 
-// Middleware to handle the root route
+// Middleware
+app.use(express.json()); // Parse incoming JSON requests
+
+// Root route
 app.get('/', (req, res) => {
     res.send('Welcome to the MongoDB connection server!');
 });
 
-// A route to check if the DB connection is successful
+// Database status route
 app.get('/status', (req, res) => {
-    // Check if mongoose is connected
-    if (mongoose.connection.readyState === 1) {
-        res.send('MongoDB connected successfully!');
-    } else {
-        res.status(500).send('MongoDB connection failed!');
-    }
+    const dbStatus = mongoose.connection.readyState === 1 ? 'MongoDB connected successfully!' : 'MongoDB connection failed!';
+    res.status(mongoose.connection.readyState === 1 ? 200 : 500).send(dbStatus);
+});
+
+// CRUD API routes
+app.use('/api', routes);
+
+// Global Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error('Error:', err.message);
+    res.status(500).json({ error: 'Internal Server Error' });
 });
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
 });
